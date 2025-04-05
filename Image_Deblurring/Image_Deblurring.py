@@ -2,11 +2,23 @@ import numpy as np
 from skimage import img_as_float, restoration
 import cv2
 
+def is_grayscale(image):
+    if len(image.shape) == 2:
+        return True    
+    # Check if all color channels are equal
+    elif len(image.shape) == 3 and (image[:, :, 0] == image[:, :, 1]).all() and (image[:, :, 1] == image[:, :, 2]).all():
+        return True
 
-def deblur_image(image_path, output_path, sigma=1.5, num_iter=25):
+    return False
+
+def deblur_image(image, sigma=1.5, num_iter=25):
     
-    image = img_as_float(image)  # Convert to float64 in range [0,1]
+    image = img_as_float(image)  # Convert to float64
     
+    if is_grayscale(image) == False:
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        cv2.imwrite(image, gray_image)
+
     # Create a Gaussian blur kernel ensuring coverage at corners
     kernel_size = int(2 * sigma + 1)
     if kernel_size % 2 == 0:
