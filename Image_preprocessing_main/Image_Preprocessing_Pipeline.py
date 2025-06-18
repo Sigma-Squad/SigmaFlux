@@ -94,6 +94,7 @@ def adjust_brightness(image, filename):
     # Brightness increased when below threshhold
     if avg_brightness < brightness_threshold:
         return cv2.convertScaleAbs(image, alpha=1, beta=brightness_value)
+    return image
 
 # Function to check whether an image is grayscale
 def is_grayscale(image):
