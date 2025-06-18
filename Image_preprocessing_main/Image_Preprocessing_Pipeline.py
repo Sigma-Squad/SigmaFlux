@@ -84,8 +84,12 @@ def deblur_image(image, sigma=1.5, num_iter=25):
 # Function to increase brightness of image
 def adjust_brightness(image, filename):
     # Convert to grayscale to measure brightness
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    avg_brightness = np.mean(gray)
+    avg_brightness = 130
+    if len(image.shape) == 3:
+        print("Image has 3 channels (color).")
+
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        avg_brightness = np.mean(gray)
 
     # Set a threshold for brightness
     brightness_threshold = 130
