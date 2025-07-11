@@ -8,11 +8,12 @@ def csv_creation(input_folder):
 
     # Updated regex to correctly match the formatted lines   # Change the pattern here
 
-    row_pattern = re.compile(
-        r"^\|\s*(\d+)\s*\|\s*([A-Z]{2}\d{2}[A-Z]\d{3})\s*\|\s*(.*?)\s*\|"
-        )
+    #row_pattern = re.compile(
+     #   r"^\|\s*(\d+)\s*\|\s*([A-Z]{2}\d{2}[A-Z]\d{3})\s*\|\s*(.*?)\s*\|"
+      #  )
 
-
+    # MAKE SUITABLE CHANGES HERE
+     
     # Step 1: Ask user for n
     n = int(input("Enter number of sign fields: "))
 
@@ -32,6 +33,7 @@ def csv_creation(input_folder):
     # Combine with separator \s*\|\s*
     separator = r'\s*\|\s*'
     full_pattern = separator.join(pattern_parts)
+    full_pattern = re.compile(full_pattern)
 
     #print("Generated regex pattern:")
     #print(full_pattern)
@@ -53,7 +55,7 @@ def csv_creation(input_folder):
                 if line.startswith('---') or not line:
                     continue
 
-                match = row_pattern.match(line)
+                match = full_pattern.match(line)
                 if match:
 
                 # CHANGE HERE                              
@@ -79,7 +81,7 @@ def csv_creation(input_folder):
                 column = ['S.No', 'Roll Number', 'Name'] + [f'Sign({i+1})' for i in range(n)]
                 df = pd.DataFrame(extracted_data, columns= column)                                      #change here
                 output_excel_path = os.path.join(output_folder, filename.replace(".txt", ".xlsx"))
-                df.to_csv(output_excel_path, index=False)
+                df.to_excel(output_excel_path, index=False)
                 print(f"✅ Saved: {output_excel_path}")
             else:
                 print(f"⚠️ No valid rows extracted from {filename}")
