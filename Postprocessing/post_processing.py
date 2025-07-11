@@ -75,9 +75,6 @@ def csv_creation(input_folder):
                     except Exception as e:
                         print("Error:", e)
 
-                #else:
-                    #print(f"❌ No match in {filename} → {line}")
-
             if extracted_data:
                 column = ['S.No', 'Roll Number', 'Name'] + [f'Sign({i+1})' for i in range(n)]
                 df = pd.DataFrame(extracted_data, columns= column)                                      #change here
@@ -87,4 +84,4 @@ def csv_creation(input_folder):
             else:
                 print(f"⚠️ No valid rows extracted from {filename}")
 
-csv_creation(r"C:\Users\shivn\Downloads\pipeline\ocr_output")
+#csv_creation(r"C:\Users\shivn\Downloads\pipeline\ocr_output")
