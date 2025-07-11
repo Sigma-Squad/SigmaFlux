@@ -1,0 +1,18 @@
+# Text-to-Excel Sign Sheet Parser
+
+This Python script reads text files containing attendance or sign sheets  
+With a pattern like:  
+S.No | Roll Number | Name | Sign(1) | Sign(2) | ... | Sign(n)
+
+It extracts the data and saves it into neatly formatted **Excel (.xlsx)** files.
+
+the code
+- Supports a dynamic number of sign columns (you choose `n` at runtime)
+- Reads all `.txt` files from an input folder
+- Outputs one Excel file per input file
+- Automatically creates the output folder if it doesn't exist
+
+Requirements:
+- Python 3.7+
+- pandas
+- openpyxl (needed by pandas to write Excel)
