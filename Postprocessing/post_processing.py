@@ -2,88 +2,52 @@ import os
 import re
 import pandas as pd
 
-def csv_creation(input_folder):
-    output_folder = r"C:\Users\shivn\Downloads\pipeline\dataframes_output"
-    os.makedirs(output_folder, exist_ok=True)
+def excel_creation(input_file, n):
 
-    # Updated regex to correctly match the formatted lines   # Change the pattern here
+    base_pattern = r"^\|\s*(\d+)\s*\|\s*([A-Z0-9]+)\s*\|\s*(.*?)\s*\|"          # basic patternfor sno , roll and name
+    date_pattern = r"\s*(Present|Absent)?\s*\|"                                 # Pattern for date
+    full_pattern = base_pattern + (date_pattern * n)
+    pattern = re.compile(full_pattern)                                          # Full pattern
 
-    #row_pattern = re.compile(
-     #   r"^\|\s*(\d+)\s*\|\s*([A-Z]{2}\d{2}[A-Z]\d{3})\s*\|\s*(.*?)\s*\|"
-      #  )
+    extracted_data = []
 
-    # MAKE SUITABLE CHANGES HERE
-     
-    # Step 1: Ask user for n
-    n = int(input("Enter number of sign fields: "))
+    with open(input_file, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    for line in lines:
+        line = line.strip()
+
+        # Skip separator lines or empty lines
+        if line.startswith('---') or not line:
+            continue
+
+        match = pattern.match(line)
+        if match:
+            try:
+                sno = match.group(1)
+                roll = match.group(2)
+                name = match.group(3)
+                sign_fields = [field.strip() if field else '' for field in match.groups()[3:]]
+
+                extracted_data.append([
+                    sno.strip(),
+                    roll.strip(),
+                    name.strip(),
+                    *sign_fields
+                ])
+            except Exception as e:
+                print("Error:", e)
+
+    base, ext = os.path.splitext(input_file)
+
+    output_path = f"{base}.xlsx"
+
+    if extracted_data:
+        columns = ['S.No', 'Roll Number', 'Name'] + [f'Date {i+1}' for i in range(n)]   # Columns heading in dataframe
+        df = pd.DataFrame(extracted_data, columns=columns)
+        df.to_excel(output_path, index=False)
+        print(f"✅ Saved: {output_path}")
+    else:
+        print("⚠️ No valid rows extracted from the file.")
 
 
-    sign_pattern = r'([^|]+)'       # each sign field: anything until next pipe
-
-    # Join all parts
-    pattern_parts = [
-        r'(\d+)',                  # s.no
-        r'([A-Z]{2}\d{2,})',       # roll
-        r'([^|]+)'                 # name
-    ]
-
-    # Add n sign patterns
-    pattern_parts.extend([sign_pattern] * n)
-
-    # Combine with separator \s*\|\s*
-    separator = r'\s*\|\s*'
-    full_pattern = separator.join(pattern_parts)
-    full_pattern = re.compile(full_pattern)
-
-    #print("Generated regex pattern:")
-    #print(full_pattern)
-       
-
-    for filename in os.listdir(input_folder):
-        if filename.endswith(".txt"):
-            input_path = os.path.join(input_folder, filename)
-
-            with open(input_path, 'r', encoding='utf-8') as f:
-                lines = f.readlines()
-
-            extracted_data = []
-
-            for line in lines:
-                line = line.strip()
-
-                # Skip separators or empty lines
-                if line.startswith('---') or not line:
-                    continue
-
-                match = full_pattern.match(line)
-                if match:
-
-                # CHANGE HERE                              
-                    try:
-                        # Taking the first three are always sno, roll, name
-
-                        sno, roll, name = match[0],match[1], match[2]
-
-                        # The rest are the sign fields
-                        sign_fields = [field.strip() for field in match[3:]]
-
-                        # Append everything to extracted_data
-                        extracted_data.append([
-                            sno.strip(),
-                            roll.strip(),
-                            name.strip(),
-                            *sign_fields   # unpack the list so each sign field is added as a separate column
-                        ])
-                    except Exception as e:
-                        print("Error:", e)
-
-            if extracted_data:
-                column = ['S.No', 'Roll Number', 'Name'] + [f'Sign({i+1})' for i in range(n)]
-                df = pd.DataFrame(extracted_data, columns= column)                                      #change here
-                output_excel_path = os.path.join(output_folder, filename.replace(".txt", ".xlsx"))
-                df.to_excel(output_excel_path, index=False)
-                print(f"✅ Saved: {output_excel_path}")
-            else:
-                print(f"⚠️ No valid rows extracted from {filename}")
-
-#csv_creation(r"C:\Users\shivn\Downloads\pipeline\ocr_output")
