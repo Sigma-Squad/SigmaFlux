@@ -1,6 +1,6 @@
 # SigmaFlux
 
-## Our team has been developing a Deep Learning Pipeline with the aim of 'Digitization of Attendance Sheets' at IIT Tirupati
+## Our team has been developing a Deep Learning Pipeline with the aim of _Digitization of Attendance Sheets_ at IIT Tirupati
 
 - Link to download and view the Overall project's Pipeline diagram :
 [Overall_Pipeline.pdf](https://github.com/user-attachments/files/20837838/Overall_Pipeline.pdf)
