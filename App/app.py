@@ -7,25 +7,6 @@ import os
 # Page configuration
 st.set_page_config(page_title="Digital Attendance Upload", page_icon="📋", layout="wide")
 imagepath="insti1.jpeg"
-if os.path.exists(imagepath):
-    print('path exists')
-    # Background Image
-    st.markdown(
-        """
-        <style>
-            body {
-                background-image: url('https://www.instagram.com/sigmasquad_iitt/?utm_source=qr&igsh=MnRzMmM2dXFqNmh4#'); 
-                background-size: cover; 
-                background-repeat: no-repeat; 
-                background-attachment: fixed; 
-                background-position: center;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-else:
-    st.error("path doesn't exist")
 
 # Title and Description
 st.markdown(
