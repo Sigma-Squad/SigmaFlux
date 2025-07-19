@@ -2,7 +2,7 @@
 
 import os
 import pre_processing_pipeline as pre_p         # importing preprocessing part
-import ocr_code as ocr                          # importing the ocr part
+import llm_code as ocr                          # importing the ocr part
 import post_processing as post_p                # importing postprocessing part
 
 def main():
