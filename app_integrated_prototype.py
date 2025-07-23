@@ -1,4 +1,3 @@
-# my_front_end.py
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -205,11 +204,15 @@ if uploaded_file is not None:
                         final_excel_data.to_excel(excel_buffer, index=False)
                         excel_buffer.seek(0) # Reset buffer position to the beginning
 
+                        # Get the base name of the uploaded file (without extension)
+                        file_name_base = os.path.splitext(uploaded_file.name)[0]
+                        download_file_name = f"{file_name_base}_attendance_data.xlsx"
+
                         # Create the download button
                         st.download_button(
                             label="Download Attendance Data",
                             data=excel_buffer,
-                            file_name="attendance_data.xlsx",
+                            file_name=download_file_name,
                             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         )
                         # --- End of Download Button Logic ---
