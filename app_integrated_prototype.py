@@ -21,68 +21,79 @@ custom_css = f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Lato:wght@400;700&display=swap');
 
-/* Futuristic background and default text color */
-body {{
-    background-color: {background_color};
-    color: {text_color};
+/* Ensure consistent background and text color for the main body and all elements */
+body, .stApp {{
+    background-color: {background_color} !important;
+    color: {text_color} !important;
     font-family: 'Open Sans', sans-serif; /* Human-friendly font for body text */
 }}
 
+/* Apply styles to all elements to force consistency */
+* {{
+    color: {text_color} !important;
+    background-color: transparent !important; /* Ensure background does not interfere */
+    border-color: {primary_color} !important; /* Consistent border color */
+}}
+
+
 /* Style for headings */
 h1, h2, h3 {{
-    color: {primary_color};
+    color: {primary_color} !important;
     font-family: 'Lato', sans-serif; /* Distinct font for headings */
     text-shadow: 2px 2px 4px #000000; /* Subtle text shadow for depth */
+    background-color: transparent !important;
 }}
 
 /* Style for paragraphs */
 p {{
-    color: {text_color};
+    color: {text_color} !important;
     font-family: 'Open Sans', sans-serif; /* Human-friendly font for body text */
+    background-color: transparent !important;
 }}
 
 /* Style for specific Streamlit elements (example: buttons) */
 .stButton>button {{
-    background-color: {primary_color};
-    color: {background_color}; /* Dark text for contrast */
+    background-color: {primary_color} !important;
+    color: {background_color} !important; /* Dark text for contrast */
     border-radius: 5px;
     padding: 10px 20px;
     font-family: 'Lato', sans-serif;
-    border: none; /* Remove default button border */
+    border: none !important; /* Remove default button border */
     cursor: pointer; /* Indicate it's clickable */
     transition: background-color 0.3s ease; /* Smooth transition on hover */
 }}
 
 .stButton>button:hover {{
-    background-color: {text_color}; /* Light Grey on hover */
-    color: {background_color}; /* Dark text on hover */
+    background-color: {text_color} !important; /* Light Grey on hover */
+    color: {background_color} !important; /* Dark text on hover */
 }}
 
 /* Style for file uploader label */
 .stFileUploader label {{
-    color: {primary_color};
+    color: {primary_color} !important;
     font-family: 'Lato', sans-serif;
     font-size: 18px; /* Increase font size */
     margin-bottom: 10px; /* Add some space below the label */
     display: block; /* Make it a block element for spacing */
+    background-color: transparent !important;
 }}
 
 /* Style for the file uploader input area */
 .stFileUploader div[data-testid="stFileUploaderDropzone"] {{
-    background-color: #1A1A2E; /* Darker accent background, keeping a slightly different shade */
-    border: 2px dashed {primary_color};
+    background-color: #1A1A2E !important; /* Darker accent background, keeping a slightly different shade */
+    border: 2px dashed {primary_color} !important;
     border-radius: 5px;
     padding: 20px;
     text-align: center;
-    color: {text_color};
+    color: {text_color} !important;
 }}
 
 
 /* Style for info boxes (using the existing pattern) */
 div[data-testid="stMarkdown"] div {{
-    background-color: #1A1A2E; /* Darker accent background, keeping a slightly different shade */
-    color: {text_color};
-    border-left: 5px solid {primary_color};
+    background-color: #1A1A2E !important; /* Darker accent background, keeping a slightly different shade */
+    color: {text_color} !important;
+    border-left: 5px solid {primary_color} !important;
     padding: 10px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -91,30 +102,53 @@ div[data-testid="stMarkdown"] div {{
 
 /* Style for the horizontal rule */
 hr {{
-    border-top: 1px solid {primary_color};
+    border-top: 1px solid {primary_color} !important;
+    background-color: transparent !important;
 }}
-
-/* Style for the footer text */
-/* Removing the absolute positioned footer text */
 
 /* Style for links in the footer */
 div a {{
-    color: {text_color};
+    color: {text_color} !important;
     text-decoration: none; /* Remove underline */
     font-family: 'Open Sans', sans-serif;
     transition: color 0.3s ease;
+    background-color: transparent !important;
 }}
 
 div a:hover {{
-    color: {primary_color};
+    color: {primary_color} !important;
 }}
 
 /* Style for image caption */
 .stImage caption {{
-    color: {text_color};
+    color: {text_color} !important;
     font-family: 'Open Sans', sans-serif;
     text-align: center;
     margin-top: 5px;
+    background-color: transparent !important;
+}}
+
+/* Ensure consistent appearance for input widgets */
+.stTextInput>div>div>input,
+.stNumberInput>div>div>input,
+.stSelectbox>div>div>select,
+.stDateInput>div>div>input,
+.stTimeInput>div>div>input {{
+    background-color: #1A1A2E !important;
+    color: {text_color} !important;
+    border: 1px solid {primary_color} !important;
+}}
+
+
+/* Ensure consistent appearance for selectbox options */
+.stSelectbox>div>div>select>option {{
+    background-color: {background_color} !important;
+    color: {text_color} !important;
+}}
+
+/* Ensure consistent appearance for sliders */
+.stSlider>div>div>div>div {{
+    background-color: {primary_color} !important;
 }}
 
 
