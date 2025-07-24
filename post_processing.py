@@ -1,8 +1,7 @@
-import os
 import re
 import pandas as pd
 
-def excel_creation(input_file, n):
+def excel_creation(input_text, n):
 
     base_pattern = r"^\|\s*(\d+)\s*\|\s*([A-Z0-9]+)\s*\|\s*(.*?)\s*\|"          # basic patternfor sno , roll and name
     date_pattern = r"\s*(Present|Absent)?\s*\|"                                 # Pattern for date
@@ -11,8 +10,7 @@ def excel_creation(input_file, n):
 
     extracted_data = []
 
-    with open(input_file, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
+    lines = input_text.splitlines()
 
     for line in lines:
         line = line.strip()
@@ -36,18 +34,14 @@ def excel_creation(input_file, n):
                     *sign_fields
                 ])
             except Exception as e:
-                print("Error:", e)
+                print("Error in post_processing:", e)
 
-    base, ext = os.path.splitext(input_file)
-
-    output_path = f"{base}.xlsx"
 
     if extracted_data:
         columns = ['S.No', 'Roll Number', 'Name'] + [f'Date {i+1}' for i in range(n)]   # Columns heading in dataframe
         df = pd.DataFrame(extracted_data, columns=columns)
-        df.to_excel(output_path, index=False)
-        print(f"✅ Saved: {output_path}")
+        return df
     else:
-        print("⚠️ No valid rows extracted from the file.")
+        return None
 
 

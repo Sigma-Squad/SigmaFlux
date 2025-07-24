@@ -1,10 +1,7 @@
 import cv2
 import numpy as np
-import os
 from skimage import img_as_float, restoration
 
-# Limit OpenCV to use fewer threads
-cv2.setNumThreads(4)
 
 # ----------- Image Enhancement Functions -----------
 
@@ -69,18 +66,18 @@ def adjust_brightness(image):                                                   
 
 # ----------- Main function to process single image -----------
 
-def run_parallel_image_processing(input_file, output_file):
-    image = cv2.imread(input_file, cv2.IMREAD_COLOR)
-    if image is None:                                                                   # If no image is present
-        print(f"Could not read image: {input_file}")
-        return
+def run_parallel_image_processing(image):
+    if image is None:
+        return None
 
     try:
         image = crop_attendance_sheet(image)
         image = resize(image)
         image = deblur_image(image)
         image = adjust_brightness(image)
-        cv2.imwrite(output_file, image)
-        print(f"Processed and saved to: {output_file}")
+        
+        return image
+        
     except Exception as e:
-        print(f"Error processing image: {e}")
+        print(f'Exception in pre_processing_pipeline: {e}')
+        return None

@@ -3,6 +3,7 @@ import json
 import os
 import base64
 import mimetypes
+import cv2
 from dotenv import load_dotenv
 
 
@@ -12,16 +13,19 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 
 # Function to convert local image to base64 data URL
-def image_to_data_url(image_path):                                      
-    mime_type, _ = mimetypes.guess_type(image_path)
-    with open(image_path, "rb") as image_file:
-        encoded = base64.b64encode(image_file.read()).decode("utf-8")
+def image_to_data_url(uploaded_image,file_name):                                      
+    mime_type, _ = mimetypes.guess_type(file_name)
+    ext = mimetypes.guess_extension(mime_type).lower()
+    success, buffer = cv2.imencode(ext,uploaded_image)
+    if not success:
+        raise ValueError(f'Failed to encode image as {ext}')
+    encoded = base64.b64encode(buffer).decode("utf-8")
     return f"data:{mime_type};base64,{encoded}"
 
 # Local image path
-def ocr_reading(image_path,n):
+def ocr_reading(uploaded_image,n,file_name):
 
-    data_url = image_to_data_url(image_path)
+    data_url = image_to_data_url(uploaded_image,file_name)
 
     # Print response
     response = requests.post(
@@ -55,14 +59,7 @@ def ocr_reading(image_path,n):
     if response.ok:
         output_text = response.json()["choices"][0]["message"]["content"]
 
-        # Save to text file
-        base, ext = os.path.splitext(image_path)
-
-        output_path = f"{base}.txt"
-
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(output_text)
-
-        print(f"✅ Output saved to '{output_path}'")
+        return output_text
+        
     else:
-        print("Error:", response.status_code,response.text)
+        return ""
