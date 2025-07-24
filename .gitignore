@@ -1,2 +1,3 @@
 ECHO is on.
 .env
+__pycache__
