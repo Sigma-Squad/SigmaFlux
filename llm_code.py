@@ -7,11 +7,6 @@ import cv2
 from dotenv import load_dotenv
 
 
-load_dotenv()  # Load variables from .env
-
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-
-
 # Function to convert local image to base64 data URL
 def image_to_data_url(uploaded_image,file_name):                                      
     mime_type, _ = mimetypes.guess_type(file_name)
@@ -23,7 +18,7 @@ def image_to_data_url(uploaded_image,file_name):
     return f"data:{mime_type};base64,{encoded}"
 
 # Local image path
-def ocr_reading(uploaded_image,n,file_name):
+def ocr_reading(uploaded_image,n,file_name,api_key):
 
     data_url = image_to_data_url(uploaded_image,file_name)
 
@@ -31,7 +26,7 @@ def ocr_reading(uploaded_image,n,file_name):
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
-            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         },
         data=json.dumps({
