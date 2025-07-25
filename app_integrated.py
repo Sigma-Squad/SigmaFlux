@@ -11,6 +11,7 @@ import SigmaFlux
 
 # Page configuration
 st.set_page_config(page_title="Digital Attendance Upload", page_icon="📋", layout="wide")
+api_key=st.secrets['api-key']
 
 # Define the color palette based on the Sigma Squad GitHub logo
 background_color = "#0D1B2A"  # Dark Blue/Almost Black
@@ -228,7 +229,7 @@ if uploaded_file is not None:
 
                     # Placeholder for calling processing functions
                     try:
-                        final_excel_data = SigmaFlux.main(image, uploaded_file.name, num_days)
+                        final_excel_data = SigmaFlux.main(image, uploaded_file.name, num_days,api_key)
                         st.success("Processing complete!")
 
                         # --- Start of Download Button Logic ---
