@@ -3,5 +3,5 @@ ECHO is on.
 __pycache__
 authTrial/src/firebaseConfig.json
 authTrial/node_modules
-authTrial/package.json
-authTrial/package-lock.json
+authTrial/src/package.json
+authTrial/src/package-lock.json
