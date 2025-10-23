@@ -2,3 +2,6 @@ ECHO is on.
 .env
 __pycache__
 authTrial/src/firebaseConfig.json
+authTrial/node_modules
+authTrial/package.json
+authTrial/package-lock.json
