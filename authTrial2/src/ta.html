@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.A. Dashboard</title>
+    <script type="module" src="/src/index.js"></script>
+</head>
+<body>
+    <h1>Welcome, T.A.</h1>
+    <p>This is the protected Teaching Assistant dashboard.</p>
+    <button id="logout-button">Log Out</button>
+
+    <script type="module">
+        import { LogOut } from '/src/index.js';
+        document.getElementById('logout-button').addEventListener('click', LogOut);
+    </script>
+</body>
+</html>

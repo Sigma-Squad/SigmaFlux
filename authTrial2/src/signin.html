@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <script type="module" src="/src/index.js"></script>
+</head>
+<body>
+    <h2>Create New User</h2>
+    <p>Please select your role before signing up:</p>
+    
+    <div>
+        <input type="radio" id="pf" value="Professor" name="role" required>
+        <label for="pf">Professor</label><br>
+        
+        <input type="radio" id="ta" value="T.A" name="role">
+        <label for="ta">T.A (Teaching Assistant)</label><br>
+        <br>
+    </div>
+
+    <button id="signup-google-btn" type="button">Sign Up with Google</button>
+    
+    <br><br>
+    <a href="/src/login.html">Already have an account? Log In</a>
+
+    <script type="module">
+        // Import the Google Sign-In function
+        import { signInWithGoogle } from '/src/index.js';
+
+        document.getElementById('signup-google-btn').addEventListener('click', () => {
+            const role = document.querySelector('input[name="role"]:checked')?.value;
+            
+            if (!role) {
+                alert('Please select your role (Professor or T.A.) before signing up.');
+                return;
+            }
+            sessionStorage.setItem('userRole', role); 
+            console.log('Role selected. Initiating Google Sign-Up...');
+            signInWithGoogle();
+        });
+    </script>
+</body>
+</html>

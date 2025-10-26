@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script type="module" src="/src/index.js"></script>
+</head>
+<body>
+    <h2>Login</h2>
+    
+    <button id="login-google-btn" type="button">Log In with Google</button>
+    
+    <br><br>
+    <a href="/src/signin.html">Need an account? Sign Up</a>
+
+    <script type="module">
+        // Import the Google Sign-In function
+        import { signInWithGoogle } from '/src/index.js';
+
+        document.getElementById('login-google-btn').addEventListener('click', () => {
+            console.log('Initiating Google Sign-In...');
+            signInWithGoogle();
+        });
+    </script>
+</body>
+</html>
